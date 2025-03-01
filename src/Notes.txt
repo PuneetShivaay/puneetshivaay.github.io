@@ -1,0 +1,15 @@
+This project uses some older version of dependencies 
+
+
+Use below command to install requird dependencies:
+npm install --legacy-peer-deps @react-three/fiber @react-three/drei maath react-tilt react-vertical-timeline-component @emailjs/browser framer-motion react-router-dom 
+
+
+
+to run :
+npm run dev
+
+to fix tailwind css issue
+npm install --legacy-peer-deps -D postcss autoprefixer
+
+npx tailwindcss init -p
