@@ -1,29 +1,99 @@
-import React, {useEffect, useState} from 'react'
-import { Link } from 'react-router-dom'
-
-import {styles} from '../styles'
-import {navLinks} from '../constants'
-import {logo, menu, close} from '../assets'
+import { useState } from "react";
+import logo from "../assets/puneetLogo.png";
+import { NAVIGATION_LINKS } from "../constants";
+import { FaTimes } from "react-icons/fa";
+import { FaBars } from "react-icons/fa6";
 
 const Navbar = () => {
-  const [active, setActive] = useState("")
-  return (
-   <nav className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 bg-primary`}>
-    <div className='w-full flex justify-between items-center max-w-7xl mx-auto'>
-      <Link 
-      to="/" 
-      className='flex items-center gap-2' 
-      onClick={() => {
-        setActive("");
-        window.scrollTo(0,0)
-      }}
-      >
-        <img src={logo} alt='logo' className='w-9 h-9 object-contain' />
-        <p className='text-white text=[18px] font-bold cursor-pointer'>Puneet <span className='sm:block hidden'> Kumar</span></p>
-      </Link>
-    </div>
-   </nav>
-  )
-}
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-export default Navbar
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleLinkClick = (e, href) => {
+    e.preventDefault();
+    const targetElement = document.querySelector(href);
+    if (targetElement) {
+      const offset = -85;
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY + offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+    setIsMobileMenuOpen(false);
+  };
+  return (
+    <div>
+      <nav className="fixed left-0 right-0 top-4 z-50">
+        {/* Desktop Navbar */}
+        <div className="mx-auto hidden max-w-2xl items-center justify-center rounded-lg border border-stone-50/30 bg-black/20 py-3 backdrop-blur-lg lg:flex">
+          <div className="flex items-center justify-between gap-6">
+            <div>
+              <a href="#">
+                <img src={logo} alt="Logo" width={150} />
+              </a>
+            </div>
+            <div>
+              <ul className="flex items-center gap-4">
+                {NAVIGATION_LINKS.map((link, index) => (
+                  <li key={index}>
+                    <a
+                      className="text-sm hover:text-yellow-400"
+                      href={link.href}
+                      onClick={(e) => handleLinkClick(e, link.href)}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+        {/* Mobile Navbar */}
+        <div className="rounded-lg backdrop-blur-md lg:hidden">
+          <div className="flex items-center justify-between">
+            <div>
+              <a href="#">
+                <img src={logo} alt="Logo" width={90} className="m-2" />
+              </a>
+            </div>
+            <div className="flex items-center ">
+              <button
+                className="focus:outline-none lg:hidden"
+                onClick={toggleMobileMenu}
+              >
+                {isMobileMenuOpen ? (
+                  <FaTimes className=" m-2 h-6 w-5" />
+                ) : (
+                  <FaBars className=" m-2 h-6 w-5" />
+                )}
+              </button>
+            </div>
+          </div>
+          {isMobileMenuOpen && (
+            <ul className="ml-4 mt-4 flex flex-col gap-4 backdrop-blur-md">
+              {NAVIGATION_LINKS.map((link, index) => (
+                <li key={index}>
+                  <a
+                    href={link.href}
+                    className="block w-full text-lg"
+                    onClick={(e) => handleLinkClick(e, link.href)}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </nav>
+    </div>
+  );
+};
+
+export default Navbar;
