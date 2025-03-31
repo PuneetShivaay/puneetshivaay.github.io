@@ -32,4 +32,10 @@ for animation need to install framer motion library
  npm i framer-motion 
 
 
+also make a build file to deploy 
+
+For deploying to gihub pages 
+ npm install gh-pages --save-dev
+
+
 
