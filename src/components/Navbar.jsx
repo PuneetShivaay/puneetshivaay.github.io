@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../assets/puneetLogo.png";
+import logo from "../assets/PuneetLogo.png";
 import { NAVIGATION_LINKS } from "../constants";
 import { FaTimes } from "react-icons/fa";
 import { FaBars } from "react-icons/fa6";
